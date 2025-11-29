@@ -1,4 +1,4 @@
-from app.services.carSerice import CarService
+from app.services.carService import CarService
 from app.models.car import Car
 from typing import List
 
