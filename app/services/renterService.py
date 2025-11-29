@@ -1,4 +1,4 @@
-from app.repositories.RenterRepository import RenterRepository
+from app.repository.renterRepository import RenterRepository
 from app.models.customer import Customer
 from typing import List
 
