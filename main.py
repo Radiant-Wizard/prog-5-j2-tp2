@@ -15,10 +15,10 @@ from app.managers.carManager import CarManager
 from app.managers.carRentManager import CarRentManager
 from app.managers.moneyRentManager import MoneyRentManager
 
-from app.controllers.renterController import RenterController
-from app.controllers.carController import CarController
-from app.controllers.carRentController import CarRentController
-from app.controllers.moneyRentController import MoneyRentController
+from app.controller.renterController import RenterController
+from app.controller.carController import CarController
+from app.controller.carRentController import CarRentController
+from app.controller.moneyRentController import MoneyRentController
 
 app = FastAPI(title="Renting API")
 

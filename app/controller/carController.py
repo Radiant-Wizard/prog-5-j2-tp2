@@ -1,15 +1,14 @@
 from fastapi import APIRouter
-from app.managers.carMenager import carManager
+from app.managers.carManager import CarManager
 
 
-class carcontroller:
-    def __init__(self, manager: carManager):
+class CarController:
+    def __init__(self, manager: CarManager):
         self.manager = manager
         self.router = APIRouter()
 
         @self.router.post("/cars")
         def postcar(data: dict):
-            """expects {"dailyprice": 100.0}"""
             return {"id": self.manager.addCar(data.get("dailyPrice"))}
 
         @self.router.get("/cars")

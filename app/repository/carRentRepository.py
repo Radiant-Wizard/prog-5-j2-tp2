@@ -8,7 +8,11 @@ class CarRentRepository:
     def create(self, rentDurationInDay: int, carId: int, renterId: int) -> int:
         with self.conn.cursor() as cur:
             cur.execute(
-                "INSERT INTO carRent (rentDurationInDay, carId, renterId) VALUES (%s, %s, %s) RETURNING id",
+                """
+                        INSERT INTO 
+                        carRent (rentDurationInDay, carId, renterId) 
+                        VALUES (%s, %s, %s) RETURNING id
+                        """,
                 (rentDurationInDay, carId, renterId),
             )
             rentId = cur.fetchone()[0]

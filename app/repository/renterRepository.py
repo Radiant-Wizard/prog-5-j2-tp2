@@ -1,7 +1,7 @@
+from typing import List
 from app.models.customer import Customer
 from app.models.entreprise import Entreprise
 from app.models.person import Person
-from typing import List
 
 
 class RenterRepository:
@@ -11,7 +11,11 @@ class RenterRepository:
     def create(self, renter: Customer) -> int:
         with self.conn.cursor() as cur:
             cur.execute(
-                "INSERT INTO renter (name, type) VALUES (%s, %s) RETURNING id",
+                """
+                    INSERT INTO renter (name, type)
+                    VALUES (%s, %s) 
+                    RETURNING id
+                    """,
                 (renter.name, renter.type),
             )
             renterId = cur.fetchone()[0]

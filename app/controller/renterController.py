@@ -10,7 +10,6 @@ class RenterController:
         # Define endpoints directly
         @self.router.post("/renters")
         def postRenter(data: dict):
-            """Expects {"name": "John", "type_": "PERSONAL"}"""
             return {"id": self.manager.addRenter(data.get("name"), data.get("type_"))}
 
         @self.router.get("/renters")
