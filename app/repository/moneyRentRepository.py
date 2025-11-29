@@ -8,7 +8,12 @@ class MoneyRentRepository:
     def create(self, amount: float, interest: float, renterId: int) -> int:
         with self.conn.cursor() as cur:
             cur.execute(
-                "INSERT INTO moneyRent (amount, interest, renterId) VALUES (%s, %s, %s) RETURNING id",
+                """
+                        INSERT INTO moneyRent 
+                        (amount, interest, renterId) 
+                        VALUES (%s, %s, %s) \
+                        RETURNING id
+                        """,
                 (amount, interest, renterId),
             )
             moneyRentId = cur.fetchone()[0]
