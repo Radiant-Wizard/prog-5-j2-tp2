@@ -1,6 +1,6 @@
+from psycopg2 import Error
 from app.repository.renterRepository import RenterRepository
 from app.models.customer import Customer
-from typing import List
 
 
 class RenterService:
@@ -8,7 +8,13 @@ class RenterService:
         self.repository = repository
 
     def createRenter(self, renter: Customer) -> int:
-        return self.repository.create(renter)
+        try:
+            return self.repository.create(renter)
+        except Error as e:
+            raise RuntimeError("Failed to create renter") from e
 
-    def getAllRenters(self) -> List[Customer]:
-        return self.repository.getAll()
+    def getAllRenters(self):
+        try:
+            return self.repository.getAll()
+        except Error as e:
+            raise RuntimeError("Failed to fetch renters") from e

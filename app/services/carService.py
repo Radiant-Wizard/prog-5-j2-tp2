@@ -1,14 +1,20 @@
+from psycopg2 import Error
 from app.repository.carRepository import CarRepository
 from app.models.car import Car
-from typing import List
 
 
 class CarService:
     def __init__(self, repository: CarRepository):
         self.repository = repository
 
-    def createCar(self, car: Car) -> int:
-        return self.repository.create(car)
+    def createCar(self, car: Car):
+        try:
+            return self.repository.create(car)
+        except Error as e:
+            raise RuntimeError("Failed to create car") from e
 
-    def getAllCars(self) -> List[Car]:
-        return self.repository.getAll()
+    def getAllCars(self):
+        try:
+            return self.repository.getAll()
+        except Error as e:
+            raise RuntimeError("Failed to fetch cars") from e
