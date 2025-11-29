@@ -1,9 +1,9 @@
-from psycopg2 import connect
+import psycopg2
 from app.core.config import Settings
 
 
 def getConnection():
-    return connect(
+    return psycopg2.connect(
         host=Settings.DB_HOST,
         port=Settings.DB_PORT,
         user=Settings.DB_USERNAME,
