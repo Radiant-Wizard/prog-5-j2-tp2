@@ -1,4 +1,6 @@
 from app.models.customer import Customer
+from app.models.entreprise import Entreprise
+from app.models.person import Person
 from typing import List
 
 
@@ -22,7 +24,10 @@ class RenterRepository:
             rows = cur.fetchall()
             result = []
             for row in rows:
-                renter = Customer(row[1], [])
-                renter.type = row[2]
+                if str(row[2]) == "ENTREPRISE":
+                    renter = Entreprise(row[1], [])
+                    renter.type = row[2]
+                renter = Person(row[1], [])
                 result.append(renter)
+
             return result
