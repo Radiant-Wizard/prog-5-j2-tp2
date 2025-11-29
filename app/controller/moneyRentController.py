@@ -9,7 +9,6 @@ class MoneyRentController:
 
         @self.router.post("/money-rents")
         def postRentMoney(data: dict):
-            """Expects {"amount": 1000, "interest": 10, "renterId": 1}"""
             return {
                 "id": self.manager.rentMoney(
                     data.get("amount"), data.get("interest"), data.get("renterId")
