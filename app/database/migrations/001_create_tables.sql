@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS renter(
 
 CREATE TABLE IF NOT EXISTS car(
   id SERIAL PRIMARY KEY,
-  carReference varchar(10) UNIQUE
+  carReference varchar(10) UNIQUE,
   dailyPrice NUMERIC(100, 2)
 );
 
