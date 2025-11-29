@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.managers.renterManager import RenterManager
 
 
@@ -7,11 +7,22 @@ class RenterController:
         self.manager = manager
         self.router = APIRouter()
 
-        # Define endpoints directly
         @self.router.post("/renters")
         def postRenter(data: dict):
-            return {"id": self.manager.addRenter(data.get("name"), data.get("type_"))}
+            try:
+                return {
+                    "id": self.manager.addRenter(
+                        str(data.get("name")), str(data.get("renterType"))
+                    )
+                }
+            except ValueError as e:
+                raise HTTPException(status_code=400, detail=str(e))
+            except Exception:
+                raise HTTPException(status_code=500, detail="Internal server error")
 
         @self.router.get("/renters")
         def getRenters():
-            return self.manager.listRenters()
+            try:
+                return self.manager.listRenters()
+            except Exception:
+                raise HTTPException(status_code=500, detail="Internal server error")

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.managers.carRentManager import CarRentManager
 
 
@@ -8,16 +8,24 @@ class CarRentController:
         self.router = APIRouter()
 
         @self.router.post("/car-rents")
-        def postRentCar(data: dict):
-            """Expects {"rentDurationInDay": 5, "carId": 1, "renterId": 2}"""
-            return {
-                "id": self.manager.rentCar(
-                    data.get("rentDurationInDay"),
-                    data.get("carId"),
-                    data.get("renterId"),
-                )
-            }
+        def postCarRent(data: dict):
+            try:
+                return {
+                    "id": self.manager.rentCar(
+                        data.get("renterId"),
+                        data.get("carId"),
+                        data.get("durationInDay"),
+                    )
+                }
+
+            except ValueError as e:
+                raise HTTPException(status_code=400, detail=str(e))
+            except Exception:
+                raise HTTPException(status_code=500, detail="Internal server error")
 
         @self.router.get("/car-rents")
         def getCarRents():
-            return self.manager.listCarRents()
+            try:
+                return self.manager.listCarRents()
+            except Exception:
+                raise HTTPException(status_code=500, detail="Internal server error")
