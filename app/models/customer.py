@@ -7,6 +7,7 @@ class Customer(Renter):
     def __init__(self, name: str, currentRentals: list[RentableObject]):
         self.name = name
         self.currentRentals = currentRentals
+        self.type = ""
 
     @override
     def getTotalSpent(self):
