@@ -236,7 +236,8 @@ disable=raw-checker-failed,
         use-implicit-booleaness-not-comparison-to-zero,
         missing-docstring,
         too-few-public-methods,
-        import-error
+        W0707, R0801
+#type: ignore       import-error
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
