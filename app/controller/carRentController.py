@@ -1,12 +1,23 @@
-from app.managers.carRentController import CarRentManager
+from fastapi import APIRouter
+from app.managers.carRentManager import CarRentManager
 
 
 class CarRentController:
     def __init__(self, manager: CarRentManager):
         self.manager = manager
+        self.router = APIRouter()
 
-    def postRentCar(self, rentDurationInDay: int, carId: int, renterId: int):
-        return self.manager.rentCar(rentDurationInDay, carId, renterId)
+        @self.router.post("/car-rents")
+        def postRentCar(data: dict):
+            """Expects {"rentDurationInDay": 5, "carId": 1, "renterId": 2}"""
+            return {
+                "id": self.manager.rentCar(
+                    data.get("rentDurationInDay"),
+                    data.get("carId"),
+                    data.get("renterId"),
+                )
+            }
 
-    def getCarRents(self):
-        return self.manager.listCarRents()
+        @self.router.get("/car-rents")
+        def getCarRents():
+            return self.manager.listCarRents()

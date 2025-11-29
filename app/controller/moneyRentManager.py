@@ -1,12 +1,21 @@
+from fastapi import APIRouter
 from app.managers.moneyRentManager import MoneyRentManager
 
 
 class MoneyRentController:
     def __init__(self, manager: MoneyRentManager):
         self.manager = manager
+        self.router = APIRouter()
 
-    def postRentMoney(self, amount: float, interest: float, renterId: int):
-        return self.manager.rentMoney(amount, interest, renterId)
+        @self.router.post("/money-rents")
+        def postRentMoney(data: dict):
+            """Expects {"amount": 1000, "interest": 10, "renterId": 1}"""
+            return {
+                "id": self.manager.rentMoney(
+                    data.get("amount"), data.get("interest"), data.get("renterId")
+                )
+            }
 
-    def getMoneyRents(self):
-        return self.manager.listMoneyRents()
+        @self.router.get("/money-rents")
+        def getMoneyRents():
+            return self.manager.listMoneyRents()

@@ -1,12 +1,18 @@
+from fastapi import APIRouter
 from app.managers.renterManager import RenterManager
 
 
 class RenterController:
     def __init__(self, manager: RenterManager):
         self.manager = manager
+        self.router = APIRouter()
 
-    def postRenter(self, name: str, type_: str):
-        return self.manager.addRenter(name, type_)
+        # Define endpoints directly
+        @self.router.post("/renters")
+        def postRenter(data: dict):
+            """Expects {"name": "John", "type_": "PERSONAL"}"""
+            return {"id": self.manager.addRenter(data.get("name"), data.get("type_"))}
 
-    def getRenters(self):
-        return self.manager.listRenters()
+        @self.router.get("/renters")
+        def getRenters():
+            return self.manager.listRenters()
